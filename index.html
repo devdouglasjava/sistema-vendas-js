@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema de Vendas (Web)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between;}
+    nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;}
+    button{cursor:pointer;padding:10px 12px;border:1px solid #ccc;background:#fff;border-radius:8px;}
+    button.active{border-color:#000;font-weight:600;}
+    section{display:none;border:1px solid #e5e5e5;border-radius:12px;padding:16px;}
+    section.active{display:block;}
+    form{display:grid;gap:10px;max-width:520px;}
+    label{display:grid;gap:6px;}
+    input, select{padding:10px;border:1px solid #ccc;border-radius:8px;}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;}
+    .row > *{flex:1;min-width:180px;}
+    table{width:100%;border-collapse:collapse;margin-top:12px;}
+    th,td{border-bottom:1px solid #eee;padding:10px;text-align:left;}
+    .msg{margin:12px 0;padding:10px;border-radius:10px;display:none;}
+    .msg.ok{background:#e9fbe9;border:1px solid #bfe8bf;}
+    .msg.err{background:#ffecec;border:1px solid #f2b4b4;}
+    .muted{color:#666;font-size:14px;}
+    footer{margin-top:18px;color:#666;font-size:13px;}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1 style="margin:0">Sistema de Vendas (Web)</h1>
+      <div class="muted">Versão simples para iniciantes: DOM + eventos + módulos ES.</div>
+    </div>
+    <button id="btnReset" title="Limpa os dados salvos no navegador">Limpar dados</button>
+  </header>
+
+  <div id="msg" class="msg"></div>
+
+  <nav>
+    <button data-page="clientes" class="active">Clientes</button>
+    <button data-page="produtos">Produtos</button>
+    <button data-page="vendas">Criar venda</button>
+    <button data-page="relatorio">Relatório</button>
+  </nav>
+
+  <section id="page-clientes" class="active">
+    <h2>Clientes</h2>
+    <form id="formCliente">
+      <label>
+        Nome do cliente
+        <input id="clienteNome" required placeholder="Ex: Ana Silva" />
+      </label>
+      <button type="submit">Cadastrar cliente</button>
+    </form>
+    <div id="clientesTabela"></div>
+  </section>
+
+  <section id="page-produtos">
+    <h2>Produtos</h2>
+    <form id="formProduto">
+      <label>
+        Nome do produto
+        <input id="produtoNome" required placeholder="Ex: Teclado" />
+      </label>
+      <div class="row">
+        <label>
+          Preço (R$)
+          <input id="produtoPreco" required inputmode="decimal" placeholder="Ex: 99.90" />
+        </label>
+        <label>
+          Estoque
+          <input id="produtoEstoque" required inputmode="numeric" placeholder="Ex: 10" />
+        </label>
+      </div>
+      <button type="submit">Cadastrar produto</button>
+    </form>
+    <div id="produtosTabela"></div>
+  </section>
+
+  <section id="page-vendas">
+    <h2>Criar venda</h2>
+
+    <form id="formVenda">
+      <label>
+        Cliente
+        <select id="vendaCliente" required></select>
+      </label>
+
+      <div class="row">
+        <label>
+          Produto
+          <select id="itemProduto"></select>
+        </label>
+        <label>
+          Quantidade
+          <input id="itemQtd" inputmode="numeric" value="1" />
+        </label>
+        <button type="button" id="btnAddItem">Adicionar item</button>
+      </div>
+
+      <div id="itensSelecionados"></div>
+
+      <button type="submit">Finalizar venda</button>
+    </form>
+  </section>
+
+  <section id="page-relatorio">
+    <h2>Relatório de vendas</h2>
+    <div id="relatorio"></div>
+  </section>
+
+  <footer>
+    Dica: abra usando um servidor local (não funciona bem com <code>file://</code> por causa de módulos).
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
